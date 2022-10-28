@@ -8,6 +8,7 @@ const moneyToThaiWordLocaleTH = require('./src/moneyToThaiWordLocaleTH');
  */
 function moneyToThaiWord(money, locale='th') {
   if (locale === 'en') {
+    // TODO: Options lowercase, uppercase, capitalize
     return moneyToThaiWordLocaleEN(money);
   }
   return moneyToThaiWordLocaleTH(money);
