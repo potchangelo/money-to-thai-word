@@ -11,6 +11,7 @@ function moneyToThaiWord(money, locale='th') {
     // TODO: Options lowercase, uppercase, capitalize
     return moneyToThaiWordLocaleEN(money);
   }
+  // TODO: Options คำว่า ถ้วน
   return moneyToThaiWordLocaleTH(money);
 }
 
