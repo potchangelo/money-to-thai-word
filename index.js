@@ -1,13 +1,16 @@
 const moneyToThaiWordLocaleEN = require('./src/moneyToThaiWordLocaleEN');
 const moneyToThaiWordLocaleTH = require('./src/moneyToThaiWordLocaleTH');
 
-function moneyToThaiWord(locale='th') {
+/**
+ * @param {number} money
+ * @param {'th'|'en'} [locale='th']
+ * @returns {string} Money word
+ */
+function moneyToThaiWord(money, locale='th') {
   if (locale === 'en') {
-    console.log('en');
+    return moneyToThaiWordLocaleEN(money);
   }
-  else {
-    console.log('th');
-  }
+  return moneyToThaiWordLocaleTH(money);
 }
 
 module.exports = moneyToThaiWord;
