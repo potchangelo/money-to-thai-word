@@ -7,7 +7,7 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava"
   },
   "homepage": "https://github.com/potchangelo/money-to-thai-word#readme",
   "repository": {
@@ -16,5 +16,8 @@
   },
   "bugs": {
     "url": "https://github.com/potchangelo/money-to-thai-word/issues"
+  },
+  "devDependencies": {
+    "ava": "^5.0.1"
   }
 }
