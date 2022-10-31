@@ -1,5 +1,5 @@
 const test = require('ava').default;
-const moneyToThaiWord = require('../');
+const { moneyToThaiWord } = require('..');
 
 test('Baht only', t => {
   t.is(moneyToThaiWord(0), 'ศูนย์บาท');

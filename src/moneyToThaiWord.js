@@ -39,6 +39,7 @@ function frontBaseToThaiWord(front, base, hasTen = false) {
   return `${frontWord}${baseToThaiWord(base)}`;
 }
 
+// TODO: Options คำว่า ถ้วน
 /**
  * @param {number} money
  */

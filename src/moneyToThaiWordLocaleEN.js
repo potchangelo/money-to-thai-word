@@ -61,10 +61,11 @@ function thousandOrderToEngWord(order) {
   return '';
 }
 
+// TODO: Options lowercase, uppercase, capitalize
 /**
  * @param {number} money
  */
-function moneyToEngWord(money) {
+function moneyToThaiWordLocaleEN(money) {
   if (money < 0) return '';
   if (money === 0) return 'zero baht';
 
@@ -141,4 +142,4 @@ function moneyToEngWord(money) {
   return word;
 }
 
-module.exports = moneyToEngWord;
+module.exports = moneyToThaiWordLocaleEN;
