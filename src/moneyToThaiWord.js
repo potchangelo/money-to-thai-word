@@ -39,13 +39,26 @@ function frontBaseToThaiWord(front, base, hasTen = false) {
   return `${frontWord}${baseToThaiWord(base)}`;
 }
 
-// TODO: Options คำว่า ถ้วน
+/**
+ * @typedef {object} ThaiWordOptions
+ * @property {boolean} showActual
+ */
+
+/**
+ * @type ThaiWordOptions
+ */
+const defaultOptions = {
+  showActual: true
+};
+
 /**
  * @param {number} money
+ * @param {ThaiWordOptions} [options]
  */
-function moneyToThaiWord(money) {
+function moneyToThaiWord(money, options = {}) {
+  let { showActual } = { ...defaultOptions, ...options };
   if (money < 0) return '';
-  if (money === 0) return 'ศูนย์บาท';
+  if (money === 0) return `ศูนย์บาท${showActual ? 'ถ้วน': ''}`;
 
   let word = '';
   let { baht, satang } = getBahtAndSatang(money);
@@ -105,7 +118,7 @@ function moneyToThaiWord(money) {
       }
     }
     word += 'สตางค์';
-  } else {
+  } else if (showActual) {
     word += 'ถ้วน';
   }
 
