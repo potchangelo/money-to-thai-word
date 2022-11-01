@@ -2,8 +2,8 @@
  * @param {number} money
  */
 function getBahtAndSatang(money) {
-  let baht = money,
-    satang = 0;
+  let baht = money;
+  let satang = 0;
   if (money < 0 || money === 0) return { baht: 0, satang };
   if (money % 1 !== 0) {
     baht = Math.floor(money);

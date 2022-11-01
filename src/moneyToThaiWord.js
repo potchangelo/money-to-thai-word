@@ -59,18 +59,18 @@ const defaultOptions = {
 function moneyToThaiWord(money, options = {}) {
   let { showActual } = { ...defaultOptions, ...options };
   if (money < 0) return '';
-  if (money === 0) return `ศูนย์บาท${showActual ? 'ถ้วน': ''}`;
-
-  let word = '';
   let { baht, satang } = getBahtAndSatang(money);
+  if (baht === 0 && satang === 0) return `ศูนย์บาท${showActual ? 'ถ้วน': ''}`;
+  let word = '';
 
   // - Baht
   if (baht !== 0) {
     // - Separate each sub baht (6 digits of baht) to array
     // - Sort by larger sub baht come first
     const bahtString = `${baht}`;
+    const subBathsCount = Math.ceil(bahtString.length / 6);
     const subBahts = [];
-    for (let i = 1; i < 4; i++) {
+    for (let i = 1; i <= subBathsCount; i++) {
       let subBaht = '';
       if (i === 1) {
         subBaht = bahtString.slice(-6 * i);
