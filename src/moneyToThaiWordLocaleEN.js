@@ -99,7 +99,6 @@ const defaultOptions = {
   textTransform: 'first-letter'
 };
 
-// TODO: Options lowercase, uppercase, capitalize
 /**
  * @param {number} money
  * @param {ThaiWordLocaleENOptions} [options]
