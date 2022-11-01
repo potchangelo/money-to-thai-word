@@ -61,14 +61,58 @@ function thousandOrderToEngWord(order) {
   return '';
 }
 
+/**
+ *
+ * @param {string} word
+ * @param {'first-letter'|'lowercase'|'uppercase'|'capitalize'} textTransform
+ */
+function wordLocaleENTransform(word, textTransform) {
+  if (textTransform === 'lowercase') {
+    return word.toLowerCase();
+  }
+  else if (textTransform === 'uppercase') {
+    return word.toUpperCase();
+  }
+  else if (textTransform === 'capitalize') {
+    return word.split(' ').reduce((prev, current, index) => {
+      const firstLetter = current.charAt(0).toUpperCase();
+      const remains = current.substring(1);
+      if (index === 0) return `${firstLetter}${remains}`;
+      return `${prev} ${firstLetter}${remains}`;
+    }, '');
+  }
+
+  const firstLetter = word.charAt(0).toUpperCase();
+  const remains = word.substring(1);
+  return `${firstLetter}${remains}`;
+}
+
+/**
+ * @typedef {object} ThaiWordLocaleENOptions
+ * @property {'first-letter'|'lowercase'|'uppercase'|'capitalize'} textTransform
+ */
+
+/**
+ * @type ThaiWordLocaleENOptions
+ */
+const defaultOptions = {
+  textTransform: 'first-letter'
+};
+
 // TODO: Options lowercase, uppercase, capitalize
 /**
  * @param {number} money
+ * @param {ThaiWordLocaleENOptions} [options]
  */
-function moneyToThaiWordLocaleEN(money) {
+function moneyToThaiWordLocaleEN(money, options = {}) {
+  let { textTransform } = { ...defaultOptions, ...options };
+
   if (money < 0) return '';
   let { baht, satang } = getBahtAndSatang(money);
-  if (baht === 0 && satang === 0) return 'zero baht';
+  if (baht === 0 && satang === 0) {
+    return wordLocaleENTransform('zero baht', textTransform);
+  }
+
   let word = '';
 
   // - Baht
@@ -119,6 +163,7 @@ function moneyToThaiWordLocaleEN(money) {
     word += 'baht';
   }
 
+  // Satang
   if (!!satang) {
     if (baht !== 0) word += ' ';
     let satang2 = satang;
@@ -139,7 +184,7 @@ function moneyToThaiWordLocaleEN(money) {
     word += 'satang';
   }
 
-  return word;
+  return wordLocaleENTransform(word, textTransform);
 }
 
 module.exports = moneyToThaiWordLocaleEN;
