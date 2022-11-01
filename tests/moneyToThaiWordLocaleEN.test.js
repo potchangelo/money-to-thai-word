@@ -45,3 +45,32 @@ test('Baht and Satang', t => {
     t.is(moneyToThaiWordLocaleEN(m.n), m.w);
   });
 });
+
+test('Baht and Satang edge cases', t => {
+  const moneys = [
+    { n: 0.001, w: 'zero baht' },
+    { n: 0.00499, w: 'zero baht' },
+    { n: 0.005, w: 'one satang' },
+    { n: 0.99, w: 'ninety nine satang' },
+    { n: 0.99499, w: 'ninety nine satang' },
+    { n: 0.995, w: 'one baht' },
+    { n: 20.00111, w: 'twenty baht' },
+    { n: 20.01111, w: 'twenty baht one satang' },
+    { n: 20.01999, w: 'twenty baht two satang' },
+    { n: 20.99111, w: 'twenty baht ninety nine satang' },
+    { n: 20.99499, w: 'twenty baht ninety nine satang' },
+    { n: 20.995, w: 'twenty one baht' },
+    { n: 20.99999, w: 'twenty one baht' },
+  ];
+  moneys.forEach(m => {
+    t.is(moneyToThaiWordLocaleEN(m.n), m.w);
+  });
+});
+
+test('Invalid numbers', t => {
+  const moneys = [-1, -0.25, -123.45];
+  moneys.forEach(m => {
+    t.falsy(moneyToThaiWordLocaleEN(m));
+  });
+});
+

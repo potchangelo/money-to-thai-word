@@ -67,10 +67,9 @@ function thousandOrderToEngWord(order) {
  */
 function moneyToThaiWordLocaleEN(money) {
   if (money < 0) return '';
-  if (money === 0) return 'zero baht';
-
-  let word = '';
   let { baht, satang } = getBahtAndSatang(money);
+  if (baht === 0 && satang === 0) return 'zero baht';
+  let word = '';
 
   // - Baht
   if (baht !== 0) {
