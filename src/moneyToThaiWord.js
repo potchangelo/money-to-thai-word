@@ -51,7 +51,6 @@ const defaultOptions = {
   showActual: true
 };
 
-// TODO: Maximum now at แสนล้านล้าน (Not exceed quintillion)
 /**
  * @param {number} money
  * @param {ThaiWordOptions} [options]
