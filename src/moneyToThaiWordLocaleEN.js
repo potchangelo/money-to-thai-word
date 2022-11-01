@@ -78,7 +78,9 @@ function moneyToThaiWordLocaleEN(money) {
     // - Sort by larger sub baht come first
     const bahtString = `${baht}`;
     const subBahts = [];
-    for (let i = 1; i < 6; i++) {
+    const subBathsCount = Math.ceil(bahtString.length / 3);
+    // TODO: Maximum quintrillion
+    for (let i = 1; i <= Math.min(subBathsCount, 6); i++) {
       let subBaht = '';
       if (i === 1) {
         subBaht = bahtString.slice(-3 * i);
