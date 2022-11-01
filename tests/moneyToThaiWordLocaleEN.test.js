@@ -28,3 +28,20 @@ test('Baht only', t => {
     t.is(moneyToThaiWordLocaleEN(m.n), m.w);
   });
 });
+
+test('Baht and Satang', t => {
+  const moneys = [
+    { n: 0.03, w: 'three satang' },
+    { n: 0.75, w: 'seventy five satang' },
+    { n: 5.25, w: 'five baht twenty five satang' },
+    { n: 51.30, w: 'fifty one baht thirty satang' },
+    { n: 635.08, w: 'six hundred thirty five baht eight satang' },
+    { n: 9503.99, w: 'nine thousand five hundred three baht ninety nine satang' },
+    { n: 32123.11, w: 'thirty two thousand one hundred twenty three baht eleven satang' },
+    { n: 700000.50, w: 'seven hundred thousand baht fifty satang' },
+    { n: 2000000.00, w: 'two million baht' },
+  ];
+  moneys.forEach(m => {
+    t.is(moneyToThaiWordLocaleEN(m.n), m.w);
+  });
+});

@@ -79,7 +79,6 @@ function moneyToThaiWordLocaleEN(money) {
     const bahtString = `${baht}`;
     const subBahts = [];
     const subBathsCount = Math.ceil(bahtString.length / 3);
-    // TODO: Maximum quintrillion
     for (let i = 1; i <= Math.min(subBathsCount, 6); i++) {
       let subBaht = '';
       if (i === 1) {
@@ -122,7 +121,7 @@ function moneyToThaiWordLocaleEN(money) {
   }
 
   if (!!satang) {
-    word += ' ';
+    if (baht !== 0) word += ' ';
     let satang2 = satang;
     for (let j = 1; j >= 0; j--) {
       const base = 10 ** j;
