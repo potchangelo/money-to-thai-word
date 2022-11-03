@@ -1,7 +1,5 @@
 const { getBahtAndSatang } = require('./shared');
 
-// TODO: Trailing space where
-
 /**
  * Check is number between 10-19.
  * @param {number} n Input number.
@@ -94,7 +92,7 @@ function numberToWord(n) {
 }
 
 /**
- * Convert 1000, 1000000, etc. to word.
+ * Convert 1000, 1000000, etc. to word (with trailing space).
  *
  * Example 1 : Order 1 is "1" + "000" = "thousand".
  *
@@ -103,12 +101,13 @@ function numberToWord(n) {
  * @param {1|2|3|4|5} order The three-zeros order. Example : 1 = 1000, 2 = 1000000.
  */
 function thousandOrderToWord(order) {
-  if (order === 5) return 'quadrillion';
-  if (order === 4) return 'trillion';
-  if (order === 3) return 'billion';
-  if (order === 2) return 'million';
-  if (order === 1) return 'thousand';
-  return '';
+  word = '';
+  if (order === 5) word = 'quadrillion';
+  if (order === 4) word = 'trillion';
+  if (order === 3) word = 'billion';
+  if (order === 2) word = 'million';
+  if (order === 1) word = 'thousand';
+  return word !== '' ? `${word} ` : '';
 }
 
 /**
@@ -158,9 +157,9 @@ function subBahtToWord(subBahts) {
     // Thousand order word
     const order = subBahts.length - 1 - index;
     const orderWord = thousandOrderToWord(order);
-    if (!!orderWord && subBaht !== 0) currentWord += `${orderWord} `;
+    if (!!orderWord && subBaht !== 0) currentWord += orderWord;
 
-    return `${prevWord}${currentWord}`;
+    return prevWord + currentWord;
   }, '');
   return word + 'baht';
 }
