@@ -1,5 +1,7 @@
 const { getBahtAndSatang } = require('./shared');
 
+// TODO: Trailing space where
+
 /**
  * Check is number between 10-19.
  * @param {number} n Input number.
@@ -149,16 +151,17 @@ function subBahtToWord(subBahts) {
   if (subBahts.length === 0) return '';
 
   // Convert each ordered sub-bahts to word
-  let word = '';
-  subBahts.forEach((subBaht, i) => {
+  const word = subBahts.reduce((prevWord, subBaht, index) => {
     // Number word
-    word += numberToWord(subBaht);
+    let currentWord = numberToWord(subBaht);
 
     // Thousand order word
-    const order = subBahts.length - 1 - i;
+    const order = subBahts.length - 1 - index;
     const orderWord = thousandOrderToWord(order);
-    if (!!orderWord && subBaht !== 0) word += `${orderWord} `;
-  });
+    if (!!orderWord && subBaht !== 0) currentWord += `${orderWord} `;
+
+    return `${prevWord}${currentWord}`;
+  }, '');
   return word + 'baht';
 }
 
@@ -227,8 +230,7 @@ function moneyToThaiWordLocaleEN(money, options = {}) {
   }
 
   // Build baht and satang word
-  let word = '';
-  word += subBahtToWord(bahtToSubBahts(baht));
+  let word = subBahtToWord(bahtToSubBahts(baht));
   word += satang > 0 && baht !== 0 ? ' ' : '';
   word += satangToWord(satang);
 
