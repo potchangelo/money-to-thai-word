@@ -2,7 +2,7 @@ const { getBahtAndSatang } = require('./shared');
 
 /**
  * Check is number between 10-19.
- * @param {number} n The number.
+ * @param {number} n Input number.
  */
 function isUniqueTen(n) {
   return 10 <= n && n <= 19;
@@ -10,7 +10,15 @@ function isUniqueTen(n) {
 
 /**
  * Convert front number and its base number to word.
+ *
  * Use with number in range 1-999.
+ *
+ * Example 1 : front = 11 -> "eleven"
+ *
+ * Example 2 : front = 4, base = 10 -> "forty"
+ *
+ * Example 3 : front = 7, base = 100 -> "seven hundred"
+ *
  * @param {number} front Number in range 1-19.
  * @param {10|100} [base] 10, 100, or nothing.
  */
@@ -53,8 +61,43 @@ function frontAndBaseToWord(front, base) {
 }
 
 /**
+ * Convert number (1-999) to word (with trailing space).
+ *
+ * Example 1 : 357 -> "three thousand fifty seven "
+ *
+ * Example 2 : 512 -> "five hundred twelve "
+ *
+ * @param {number} n Integer number between 1-999
+ */
+function numberToWord(n) {
+  if (n < 1 || n > 999) return '';
+
+  let word = '';
+  let nClone = n;
+  for (let j = `${n}`.length - 1; j >= 0; j--) {
+    const base = 10 ** j;
+    const dividedMoney = nClone / base;
+    let moneyWord = '';
+    if (isUniqueTen(nClone)) {
+      moneyWord = frontAndBaseToWord(nClone);
+      j = 0;
+    } else if (dividedMoney >= 1) {
+      const front = Math.floor(dividedMoney);
+      moneyWord = frontAndBaseToWord(front, base);
+      nClone %= base;
+    }
+    if (!!moneyWord) word += `${moneyWord} `;
+  }
+  return word;
+}
+
+/**
  * Convert 1000, 1000000, etc. to word.
- * Example : Order 2 is "1" + "000" x 3 = "1000000" = "million".
+ *
+ * Example 1 : Order 1 is "1" + "000" = "thousand".
+ *
+ * Example 2 : Order 2 is "1" + "000" + "000" = "million".
+ *
  * @param {1|2|3|4|5} order The three-zeros order. Example : 1 = 1000, 2 = 1000000.
  */
 function thousandOrderToWord(order) {
@@ -67,15 +110,17 @@ function thousandOrderToWord(order) {
 }
 
 /**
- * Convert baht to sub-bahts (ordered 3 digits number) array.
- * @param {number} baht Input baht.
+ * Convert baht to ordered sub-bahts (Array of numbers between 0-999).
+ *
+ * Example : 10,200,300 -> [10, 200, 300].
+ *
+ * @param {number} baht Integer baht value.
  */
 function bahtToSubBahts(baht) {
   // Empty array for zero baht
   if (baht === 0) return [];
 
   // Slice baht string to sub-bahts (3 digits) array
-  // Example baht = 10,200,300 -> subBahts = [10, 200, 300]
   const bahtString = `${baht}`;
   const subBahts = [];
   const subBathsCount = Math.ceil(bahtString.length / 3);
@@ -94,40 +139,22 @@ function bahtToSubBahts(baht) {
 
 /**
  * Convert sub-bahts to word.
- * @param {number[]} subBahts Array of ordered 3 digits number.
+ *
+ * Example : [10, 200, 300] -> "ten million " + "two hundred thousand " + "three hundred " + "bath"
+ *
+ * @param {number[]} subBahts Array of numbers between 0-999.
  */
 function subBahtToWord(subBahts) {
   // Empty string for zero baht
   if (subBahts.length === 0) return '';
 
   // Convert each ordered sub-bahts to word
-  // Example : [10, 200, 300] -> "ten million " + "two hundred thousand " + "three hundred"
   let word = '';
   subBahts.forEach((subBaht, i) => {
-    let subBaht2 = subBaht;
+    // Number word
+    word += numberToWord(subBaht);
 
-    // TODO: Refactor duplicated code
-    // Get number word in English
-    // Example 1 : 12 -> "twelve"
-    // Example 2 : 21 -> "twenty " + "one"
-    for (let j = 2; j >= 0; j--) {
-      const base = 10 ** j;
-      const dividedMoney = subBaht2 / base;
-      let moneyWord = '';
-      if (isUniqueTen(subBaht2)) {
-        moneyWord = frontAndBaseToWord(subBaht2);
-        j = 0;
-      } else if (dividedMoney >= 1) {
-        const front = Math.floor(dividedMoney);
-        moneyWord = frontAndBaseToWord(front, base);
-        subBaht2 %= base;
-      }
-      if (!!moneyWord) word += `${moneyWord} `;
-    }
-
-    // Get thousand order word in English
-    // Example 1 : order 0 -> ""
-    // Example 2 : order 1 -> "thousand"
+    // Thousand order word
     const order = subBahts.length - 1 - i;
     const orderWord = thousandOrderToWord(order);
     if (!!orderWord && subBaht !== 0) word += `${orderWord} `;
@@ -137,38 +164,18 @@ function subBahtToWord(subBahts) {
 
 /**
  * Convert satang to word.
- * @param {number} satang Input satang.
+ *
+ * Example : 75 -> "seventy five satang"
+ *
+ * @param {number} satang Integer satang value between 1-99.
  */
 function satangToWord(satang) {
-  // Empty string for zero satang
-  if (satang === 0) return '';
-
-  // TODO: Refactor duplicated code
-  // Get number word in English
-  // Example 1 : 12 -> "twelve"
-  // Example 2 : 21 -> "twenty " + "one"
-  let word = '';
-  let satang2 = satang;
-  for (let j = 1; j >= 0; j--) {
-    const base = 10 ** j;
-    const dividedMoney = satang2 / base;
-    let moneyWord = '';
-    if (isUniqueTen(satang2)) {
-      moneyWord = frontAndBaseToWord(satang2);
-      j = 0;
-    } else if (dividedMoney >= 1) {
-      const front = Math.floor(dividedMoney);
-      moneyWord = frontAndBaseToWord(front, base);
-      satang2 %= base;
-    }
-    if (!!moneyWord) word += `${moneyWord} `;
-  }
-  return word + 'satang';
+  return satang > 0 ? numberToWord(satang) + 'satang' : '';
 }
 
 /**
  * Transform word to any text-transform option.
- * @param {string} word Input word.
+ * @param {string} word Original word.
  * @param {'first-letter'|'lowercase'|'uppercase'|'capitalize'} textTransform Transform style.
  */
 function wordTransform(word, textTransform) {
