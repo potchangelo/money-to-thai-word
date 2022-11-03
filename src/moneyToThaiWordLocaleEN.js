@@ -1,20 +1,23 @@
 const { getBahtAndSatang } = require('./shared');
 
 /**
- * @param {number} num
+ * Check is number between 10-19.
+ * @param {number} n The number.
  */
-function isUniqueTen(num) {
-  return 10 <= num && num <= 19;
+function isUniqueTen(n) {
+  return 10 <= n && n <= 19;
 }
 
 /**
- * @param {number} front
- * @param {number} [base]
+ * Convert front number and its base number to word.
+ * Use with number in range 1-999.
+ * @param {number} front Number in range 1-19.
+ * @param {10|100} [base] 10, 100, or nothing.
  */
-function frontBasetoEngWord(front, base) {
-  let frontWord = '',
-    baseWord = '';
-  if (base === 1e1) {
+function frontAndBaseToWord(front, base) {
+  let frontWord = '';
+  let baseWord = '';
+  if (base === 10) {
     if (front === 9) frontWord = 'ninety';
     else if (front === 8) frontWord = 'eighty';
     else if (front === 7) frontWord = 'seventy';
@@ -45,14 +48,16 @@ function frontBasetoEngWord(front, base) {
     else if (front === 2) frontWord = 'two';
     else if (front === 1) frontWord = 'one';
   }
-  if (base === 1e2) baseWord = ' hundred';
+  if (base === 100) baseWord = ' hundred';
   return `${frontWord}${baseWord}`;
 }
 
 /**
- * @param {number} order
+ * Convert 1000, 1000000, etc. to word.
+ * Example : Order 2 is "1" + "000" x 3 = "1000000" = "million".
+ * @param {1|2|3|4|5} order The three-zeros order. Example : 1 = 1000, 2 = 1000000.
  */
-function thousandOrderToEngWord(order) {
+function thousandOrderToWord(order) {
   if (order === 5) return 'quadrillion';
   if (order === 4) return 'trillion';
   if (order === 3) return 'billion';
@@ -62,11 +67,111 @@ function thousandOrderToEngWord(order) {
 }
 
 /**
- *
- * @param {string} word
- * @param {'first-letter'|'lowercase'|'uppercase'|'capitalize'} textTransform
+ * Convert baht to sub-bahts (ordered 3 digits number) array.
+ * @param {number} baht Input baht.
  */
-function wordLocaleENTransform(word, textTransform) {
+function bahtToSubBahts(baht) {
+  // Empty array for zero baht
+  if (baht === 0) return [];
+
+  // Slice baht string to sub-bahts (3 digits) array
+  // Example baht = 10,200,300 -> subBahts = [10, 200, 300]
+  const bahtString = `${baht}`;
+  const subBahts = [];
+  const subBathsCount = Math.ceil(bahtString.length / 3);
+  for (let i = 1; i <= Math.min(subBathsCount, 6); i++) {
+    let subBaht = '';
+    if (i === 1) {
+      subBaht = bahtString.slice(-3 * i);
+    } else {
+      subBaht = bahtString.slice(-3 * i, -3 * (i - 1));
+    }
+    if (subBaht === '') break;
+    subBahts.unshift(+subBaht);
+  }
+  return subBahts;
+}
+
+/**
+ * Convert sub-bahts to word.
+ * @param {number[]} subBahts Array of ordered 3 digits number.
+ */
+function subBahtToWord(subBahts) {
+  // Empty string for zero baht
+  if (subBahts.length === 0) return '';
+
+  // Convert each ordered sub-bahts to word
+  // Example : [10, 200, 300] -> "ten million " + "two hundred thousand " + "three hundred"
+  let word = '';
+  subBahts.forEach((subBaht, i) => {
+    let subBaht2 = subBaht;
+
+    // TODO: Refactor duplicated code
+    // Get number word in English
+    // Example 1 : 12 -> "twelve"
+    // Example 2 : 21 -> "twenty " + "one"
+    for (let j = 2; j >= 0; j--) {
+      const base = 10 ** j;
+      const dividedMoney = subBaht2 / base;
+      let moneyWord = '';
+      if (isUniqueTen(subBaht2)) {
+        moneyWord = frontAndBaseToWord(subBaht2);
+        j = 0;
+      } else if (dividedMoney >= 1) {
+        const front = Math.floor(dividedMoney);
+        moneyWord = frontAndBaseToWord(front, base);
+        subBaht2 %= base;
+      }
+      if (!!moneyWord) word += `${moneyWord} `;
+    }
+
+    // Get thousand order word in English
+    // Example 1 : order 0 -> ""
+    // Example 2 : order 1 -> "thousand"
+    const order = subBahts.length - 1 - i;
+    const orderWord = thousandOrderToWord(order);
+    if (!!orderWord && subBaht !== 0) word += `${orderWord} `;
+  });
+  return word + 'baht';
+}
+
+/**
+ * Convert satang to word.
+ * @param {number} satang Input satang.
+ */
+function satangToWord(satang) {
+  // Empty string for zero satang
+  if (satang === 0) return '';
+
+  // TODO: Refactor duplicated code
+  // Get number word in English
+  // Example 1 : 12 -> "twelve"
+  // Example 2 : 21 -> "twenty " + "one"
+  let word = '';
+  let satang2 = satang;
+  for (let j = 1; j >= 0; j--) {
+    const base = 10 ** j;
+    const dividedMoney = satang2 / base;
+    let moneyWord = '';
+    if (isUniqueTen(satang2)) {
+      moneyWord = frontAndBaseToWord(satang2);
+      j = 0;
+    } else if (dividedMoney >= 1) {
+      const front = Math.floor(dividedMoney);
+      moneyWord = frontAndBaseToWord(front, base);
+      satang2 %= base;
+    }
+    if (!!moneyWord) word += `${moneyWord} `;
+  }
+  return word + 'satang';
+}
+
+/**
+ * Transform word to any text-transform option.
+ * @param {string} word Input word.
+ * @param {'first-letter'|'lowercase'|'uppercase'|'capitalize'} textTransform Transform style.
+ */
+function wordTransform(word, textTransform) {
   if (textTransform === 'lowercase') {
     return word.toLowerCase();
   }
@@ -100,90 +205,27 @@ const defaultOptions = {
 };
 
 /**
- * @param {number} money
- * @param {ThaiWordLocaleENOptions} [options]
+ * Convert money (number) to Thai word (string) in English locale.
+ * @param {number} money Input money.
+ * @param {ThaiWordLocaleENOptions} [options] Optional configurations.
  */
 function moneyToThaiWordLocaleEN(money, options = {}) {
   let { textTransform } = { ...defaultOptions, ...options };
 
+  // Less than or equals to zero cases
   if (money < 0) return '';
   let { baht, satang } = getBahtAndSatang(money);
   if (baht === 0 && satang === 0) {
-    return wordLocaleENTransform('zero baht', textTransform);
+    return wordTransform('zero baht', textTransform);
   }
 
+  // Build baht and satang word
   let word = '';
+  word += subBahtToWord(bahtToSubBahts(baht));
+  word += satang > 0 && baht !== 0 ? ' ' : '';
+  word += satangToWord(satang);
 
-  // - Baht
-  if (baht !== 0) {
-    // - Separate each sub baht (6 digits of baht) to array
-    // - Sort by larger sub baht come first
-    const bahtString = `${baht}`;
-    const subBahts = [];
-    const subBathsCount = Math.ceil(bahtString.length / 3);
-    for (let i = 1; i <= Math.min(subBathsCount, 6); i++) {
-      let subBaht = '';
-      if (i === 1) {
-        subBaht = bahtString.slice(-3 * i);
-      } else {
-        subBaht = bahtString.slice(-3 * i, -3 * (i - 1));
-      }
-      if (subBaht === '') break;
-      subBahts.unshift(+subBaht);
-    }
-
-    subBahts.forEach((subBaht, i) => {
-      let subBaht2 = subBaht;
-
-      // - Get thousand order index (0 is unit, 1 is thousand, 2 is million)
-      const order = subBahts.length - 1 - i;
-      const orderWord = thousandOrderToEngWord(order);
-
-      // - Convert each sub baht to word
-      // - Numbers 10 - 19 are unique words
-      // - Other numbers are general words
-      for (let j = 2; j >= 0; j--) {
-        const base = 10 ** j;
-        const dividedMoney = subBaht2 / base;
-        let moneyWord = '';
-        if (isUniqueTen(subBaht2)) {
-          moneyWord = frontBasetoEngWord(subBaht2);
-          j = 0;
-        } else if (dividedMoney >= 1) {
-          const front = Math.floor(dividedMoney);
-          moneyWord = frontBasetoEngWord(front, base);
-          subBaht2 %= base;
-        }
-        if (!!moneyWord) word += `${moneyWord} `;
-      }
-
-      if (!!orderWord && subBaht !== 0) word += `${orderWord} `;
-    });
-    word += 'baht';
-  }
-
-  // Satang
-  if (!!satang) {
-    if (baht !== 0) word += ' ';
-    let satang2 = satang;
-    for (let j = 1; j >= 0; j--) {
-      const base = 10 ** j;
-      const dividedMoney = satang2 / base;
-      let moneyWord = '';
-      if (isUniqueTen(satang2)) {
-        moneyWord = frontBasetoEngWord(satang2);
-        j = 0;
-      } else if (dividedMoney >= 1) {
-        const front = Math.floor(dividedMoney);
-        moneyWord = frontBasetoEngWord(front, base);
-        satang2 %= base;
-      }
-      if (!!moneyWord) word += `${moneyWord} `;
-    }
-    word += 'satang';
-  }
-
-  return wordLocaleENTransform(word, textTransform);
+  return wordTransform(word, textTransform);
 }
 
 module.exports = moneyToThaiWordLocaleEN;
