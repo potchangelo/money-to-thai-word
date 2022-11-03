@@ -101,9 +101,8 @@ test('Baht and Satang edge cases', t => {
 });
 
 test('Invalid numbers', t => {
-  const moneys = [-1, -0.25, -123.45];
+  const moneys = [-1, -0.25, -123.45, 1e18, 1000000000000000001];
   moneys.forEach(m => {
     t.falsy(moneyToThaiWordLocaleEN(m));
   });
 });
-
