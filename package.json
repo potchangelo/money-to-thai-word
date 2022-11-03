@@ -19,6 +19,7 @@
     "url": "https://github.com/potchangelo/money-to-thai-word/issues"
   },
   "devDependencies": {
+    "@types/node": "^18.11.9",
     "ava": "^5.0.1"
   }
 }
