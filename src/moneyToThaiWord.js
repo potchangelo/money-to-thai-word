@@ -50,6 +50,35 @@ function frontAndBaseToWord(front, base, hasTen = false) {
 }
 
 /**
+ * Convert number (1-999999) to word.
+ *
+ * Example 1 : 357 -> "สามร้อยห้าสิบเจ็ด"
+ *
+ * Example 2 : 51215 -> "ห้าหมื่นหนึ่งพันสองร้อยสิบห้า"
+ *
+ * @param {number} n Integer number between 1-999999
+ */
+function numberToWord(n) {
+  if (n < 1 || n > 999999) return '';
+
+  let word = '';
+  let nClone = n;
+  let hasTen = false;
+  for (let j = `${n}`.length - 1; j >= 0; j--) {
+    const base = 10 ** j;
+    const dividedMoney = nClone / base;
+    if (dividedMoney >= 1) {
+      const front = Math.floor(dividedMoney);
+      const moneyWord = frontAndBaseToWord(front, base, hasTen);
+      word += moneyWord;
+      nClone %= base;
+      hasTen = base === 1e1;
+    }
+  }
+  return word;
+}
+
+/**
  * Convert baht to ordered sub-bahts (Array of numbers between 0-999999).
  *
  * Example : 10,200,300 -> [10, 200300].
@@ -90,26 +119,24 @@ function subBahtToWord(subBahts) {
 
   // Convert each ordered sub-bahts to word
   const word = subBahts.reduce((prevWord, subBaht, index) => {
-    let currentWord = '';
-    let hasTen = false;
-    for (let j = 5; j >= 0; j--) {
-      const base = 10 ** j;
-      const dividedMoney = subBaht / base;
-      if (dividedMoney >= 1) {
-        const front = Math.floor(dividedMoney);
-        const moneyWord = frontAndBaseToWord(front, base, hasTen);
-        currentWord += moneyWord;
-        subBaht %= base;
-        hasTen = base === 1e1;
-      }
-    }
+    let currentWord = numberToWord(subBaht);
     if (index !== subBahts.length - 1) {
       currentWord += 'ล้าน';
     }
-
     return prevWord + currentWord;
   }, '');
   return word + 'บาท';
+}
+
+/**
+ * Convert satang to word.
+ *
+ * Example : 75 -> "เจ็ดสิบห้าสตางค์"
+ *
+ * @param {number} satang Integer satang value between 1-99.
+ */
+function satangToWord(satang) {
+  return satang > 0 ? numberToWord(satang) + 'สตางค์' : '';
 }
 
 /**
@@ -140,26 +167,10 @@ function moneyToThaiWord(money, options = {}) {
   // Zero case
   if (baht === 0 && satang === 0) return `ศูนย์บาท${showActual ? 'ถ้วน': ''}`;
 
+  // Build baht and satang word
   let word = subBahtToWord(bahtToSubBahts(baht));
-
-  // - Satang
-  if (satang !== 0) {
-    let hasTen = false;
-    for (let i = 1; i >= 0; i--) {
-      const base = 10 ** i;
-      const dividedMoney = satang / base;
-      if (dividedMoney >= 1) {
-        const front = Math.floor(dividedMoney);
-        const moneyWord = frontAndBaseToWord(front, base, hasTen);
-        word += moneyWord;
-        satang %= base;
-        hasTen = base === 1e1;
-      }
-    }
-    word += 'สตางค์';
-  } else if (showActual) {
-    word += 'ถ้วน';
-  }
+  word += satangToWord(satang);
+  word += satang === 0 && showActual ? 'ถ้วน' : '';
 
   return word;
 }
