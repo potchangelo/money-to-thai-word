@@ -11,8 +11,6 @@ function isUniqueTen(n) {
 /**
  * Convert front number and its base number to word.
  *
- * Use with number in range 1-999.
- *
  * Example 1 : front = 11 -> "eleven"
  *
  * Example 2 : front = 4, base = 10 -> "forty"
@@ -91,6 +89,7 @@ function numberToWord(n) {
   return word;
 }
 
+// TODO: Change order from power number (1, 2, 3) to 1000, 1000000, 1eX
 /**
  * Convert 1000, 1000000, etc. to word (with trailing space).
  *
@@ -223,7 +222,10 @@ function moneyToThaiWordLocaleEN(money, options = {}) {
 
   // Lt. zero or mte. quintillion cases
   if (money < 0 || money >= 1e18) return '';
+
   let { baht, satang } = getBahtAndSatang(money);
+
+  // Zero case
   if (baht === 0 && satang === 0) {
     return wordTransform('zero baht', textTransform);
   }
