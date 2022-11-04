@@ -221,7 +221,7 @@ const defaultOptions = {
 function moneyToThaiWordLocaleEN(money, options = {}) {
   let { textTransform } = { ...defaultOptions, ...options };
 
-  // Lt. zero or mte. quintrillion cases
+  // Lt. zero or mte. quintillion cases
   if (money < 0 || money >= 1e18) return '';
   let { baht, satang } = getBahtAndSatang(money);
   if (baht === 0 && satang === 0) {
