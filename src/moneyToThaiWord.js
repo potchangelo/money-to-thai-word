@@ -3,7 +3,7 @@ const { getBahtAndSatang } = require('./shared');
 /**
  * Convert base 10, 100, 1000, 10000, 100000 to word.
  *
- * @param {10|100|1000|10000|100000} base Number in 1, 10, ..., 100000.
+ * @param {10|100|1000|10000|100000} base Number in 10, 100, ..., 100000.
  */
 function baseToWord(base) {
   if (base === 1e5) return 'แสน';
