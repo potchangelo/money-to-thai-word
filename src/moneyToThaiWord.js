@@ -148,7 +148,7 @@ function satangToWord(satang) {
  * @type ThaiWordOptions
  */
 const defaultOptions = {
-  showActual: true
+  showActual: true,
 };
 
 /**
@@ -165,7 +165,7 @@ function moneyToThaiWord(money, options = {}) {
   let { baht, satang } = getBahtAndSatang(money);
 
   // Zero case
-  if (baht === 0 && satang === 0) return `ศูนย์บาท${showActual ? 'ถ้วน': ''}`;
+  if (baht === 0 && satang === 0) return `ศูนย์บาท${showActual ? 'ถ้วน' : ''}`;
 
   // Build baht and satang word
   let word = subBahtToWord(bahtToSubBahts(baht));

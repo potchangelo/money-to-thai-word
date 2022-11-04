@@ -14,7 +14,10 @@ test('Baht only', t => {
     { n: 414243, w: 'Four hundred fourteen thousand two hundred forty three baht' },
     { n: 7531246, w: 'Seven million five hundred thirty one thousand two hundred forty six baht' },
     { n: 27531246, w: 'Twenty seven million five hundred thirty one thousand two hundred forty six baht' },
-    { n: 527531246, w: 'Five hundred twenty seven million five hundred thirty one thousand two hundred forty six baht' },
+    {
+      n: 527531246,
+      w: 'Five hundred twenty seven million five hundred thirty one thousand two hundred forty six baht',
+    },
     { n: 9800000000, w: 'Nine billion eight hundred million baht' },
     { n: 3000000000000, w: 'Three trillion baht' },
     { n: 63000000000000, w: 'Sixty three trillion baht' },
@@ -34,12 +37,12 @@ test('Baht and Satang', t => {
     { n: 0.03, w: 'Three satang' },
     { n: 0.75, w: 'Seventy five satang' },
     { n: 5.25, w: 'Five baht twenty five satang' },
-    { n: 51.30, w: 'Fifty one baht thirty satang' },
+    { n: 51.3, w: 'Fifty one baht thirty satang' },
     { n: 635.08, w: 'Six hundred thirty five baht eight satang' },
     { n: 9503.99, w: 'Nine thousand five hundred three baht ninety nine satang' },
     { n: 32123.11, w: 'Thirty two thousand one hundred twenty three baht eleven satang' },
-    { n: 700000.50, w: 'Seven hundred thousand baht fifty satang' },
-    { n: 2000000.00, w: 'Two million baht' },
+    { n: 700000.5, w: 'Seven hundred thousand baht fifty satang' },
+    { n: 2000000.0, w: 'Two million baht' },
   ];
   moneys.forEach(m => {
     t.is(moneyToThaiWordLocaleEN(m.n), m.w);
@@ -48,7 +51,7 @@ test('Baht and Satang', t => {
 
 test('Lowercase', t => {
   const moneys = [
-    { n: 0.50, w: 'fifty satang' },
+    { n: 0.5, w: 'fifty satang' },
     { n: 8.25, w: 'eight baht twenty five satang' },
     { n: 19, w: 'nineteen baht' },
   ];
@@ -59,7 +62,7 @@ test('Lowercase', t => {
 
 test('Uppercase', t => {
   const moneys = [
-    { n: 0.50, w: 'FIFTY SATANG' },
+    { n: 0.5, w: 'FIFTY SATANG' },
     { n: 8.25, w: 'EIGHT BAHT TWENTY FIVE SATANG' },
     { n: 19, w: 'NINETEEN BAHT' },
   ];
@@ -70,7 +73,7 @@ test('Uppercase', t => {
 
 test('Capitalize', t => {
   const moneys = [
-    { n: 0.50, w: 'Fifty Satang' },
+    { n: 0.5, w: 'Fifty Satang' },
     { n: 8.25, w: 'Eight Baht Twenty Five Satang' },
     { n: 19, w: 'Nineteen Baht' },
   ];

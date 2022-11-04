@@ -182,11 +182,9 @@ function satangToWord(satang) {
 function wordTransform(word, textTransform) {
   if (textTransform === 'lowercase') {
     return word.toLowerCase();
-  }
-  else if (textTransform === 'uppercase') {
+  } else if (textTransform === 'uppercase') {
     return word.toUpperCase();
-  }
-  else if (textTransform === 'capitalize') {
+  } else if (textTransform === 'capitalize') {
     return word.split(' ').reduce((prev, current, index) => {
       const firstLetter = current.charAt(0).toUpperCase();
       const remains = current.substring(1);
@@ -209,7 +207,7 @@ function wordTransform(word, textTransform) {
  * @type ThaiWordLocaleENOptions
  */
 const defaultOptions = {
-  textTransform: 'first-letter'
+  textTransform: 'first-letter',
 };
 
 /**
