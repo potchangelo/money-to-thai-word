@@ -17,7 +17,7 @@ function isUniqueTen(n) {
  *
  * Example 3 : front = 7, base = 100 -> "seven hundred"
  *
- * @param {number} front Number in range 1-19.
+ * @param {number} front Integer number between 1-19.
  * @param {10|100} [base] 10, 100, or nothing.
  */
 function frontAndBaseToWord(front, base) {
@@ -89,7 +89,7 @@ function numberToWord(n) {
   return word;
 }
 
-// TODO: Change order from power number (1, 2, 3) to 1000, 1000000, 1eX
+// FIXME: Change order from power number (1, 2, 3) to 1000, 1000000, 1eX
 /**
  * Convert 1000, 1000000, etc. to word (with trailing space).
  *
@@ -110,7 +110,7 @@ function thousandOrderToWord(order) {
 }
 
 /**
- * Convert baht to ordered sub-bahts (Array of numbers between 0-999).
+ * Convert baht to ordered sub-bahts (Array of integer numbers between 0-999).
  *
  * Example : 10,200,300 -> [10, 200, 300].
  *
@@ -142,7 +142,7 @@ function bahtToSubBahts(baht) {
  *
  * Example : [10, 200, 300] -> "ten million " + "two hundred thousand " + "three hundred " + "bath"
  *
- * @param {number[]} subBahts Array of numbers between 0-999.
+ * @param {number[]} subBahts Array of integer numbers between 0-999.
  */
 function subBahtToWord(subBahts) {
   // Empty string for zero baht
@@ -166,7 +166,7 @@ function subBahtToWord(subBahts) {
 /**
  * Convert satang to word.
  *
- * Example : 75 -> "seventy five satang"
+ * Example : 75 -> "seventy five " + "satang"
  *
  * @param {number} satang Integer satang value between 1-99.
  */

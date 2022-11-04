@@ -3,7 +3,7 @@ const { getBahtAndSatang } = require('./shared');
 /**
  * Convert base 10, 100, 1000, 10000, 100000 to word.
  *
- * @param {10|100|1000|10000|100000} base Number in 1, 10, 100, 1000, 10000, 100000.
+ * @param {10|100|1000|10000|100000} base Number in 1, 10, ..., 100000.
  */
 function baseToWord(base) {
   if (base === 1e5) return 'แสน';
@@ -15,7 +15,7 @@ function baseToWord(base) {
 }
 
 /**
- * Convert front number and its base number to word (Thai style).
+ * Convert front number and its base number to word.
  *
  * Example 1 : front 2, base 10 -> "ยี่" + "สิบ".
  *
@@ -23,8 +23,8 @@ function baseToWord(base) {
  *
  * Example 3 : front 5 -> "ห้า".
  *
- * @param {number} front Number in range 1-9.
- * @param {1|10|100|1000|10000|100000} base Number in 1, 10, 100, 1000, 10000, 100000.
+ * @param {number} front Integer number between 1-9.
+ * @param {1|10|100|1000|10000|100000} base Number in 1, 10, ..., 100000.
  * @param {boolean} [hasTen=false] Is x (this front number) behind ten-order number like 1x, 2x
  */
 function frontAndBaseToWord(front, base, hasTen = false) {
@@ -52,11 +52,11 @@ function frontAndBaseToWord(front, base, hasTen = false) {
 /**
  * Convert number (1-999999) to word.
  *
- * Example 1 : 357 -> "สามร้อยห้าสิบเจ็ด"
+ * Example 1 : 357 -> "สามร้อยห้าสิบเจ็ด".
  *
- * Example 2 : 51215 -> "ห้าหมื่นหนึ่งพันสองร้อยสิบห้า"
+ * Example 2 : 51215 -> "ห้าหมื่นหนึ่งพันสองร้อยสิบห้า".
  *
- * @param {number} n Integer number between 1-999999
+ * @param {number} n Integer number between 1-999999.
  */
 function numberToWord(n) {
   if (n < 1 || n > 999999) return '';
@@ -111,7 +111,7 @@ function bahtToSubBahts(baht) {
  *
  * Example : [10, 200300] -> "สิบล้าน" + "สอนแสนสามร้อย" + "บาท"
  *
- * @param {number[]} subBahts Array of numbers between 0-999999.
+ * @param {number[]} subBahts Array of integer numbers between 0-999999.
  */
 function subBahtToWord(subBahts) {
   // Empty string for zero baht
@@ -131,7 +131,7 @@ function subBahtToWord(subBahts) {
 /**
  * Convert satang to word.
  *
- * Example : 75 -> "เจ็ดสิบห้าสตางค์"
+ * Example : 75 -> "เจ็ดสิบห้า" + "สตางค์"
  *
  * @param {number} satang Integer satang value between 1-99.
  */
