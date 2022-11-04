@@ -1,5 +1,6 @@
 /**
- * @param {number} money
+ * Extract baht and satang from money.
+ * @param {number} money Original money.
  */
 function getBahtAndSatang(money) {
   let baht = money;
