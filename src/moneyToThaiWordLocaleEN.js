@@ -100,7 +100,7 @@ function numberToWord(n) {
  * @param {1|2|3|4|5} order The three-zeros order. Example : 1 = 1000, 2 = 1000000.
  */
 function thousandOrderToWord(order) {
-  word = '';
+  let word = '';
   if (order === 5) word = 'quadrillion';
   if (order === 4) word = 'trillion';
   if (order === 3) word = 'billion';

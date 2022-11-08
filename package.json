@@ -31,6 +31,7 @@
   "devDependencies": {
     "@types/node": "^18.11.9",
     "ava": "^5.0.1",
+    "eslint": "^8.27.0",
     "prettier": "^2.7.1"
   }
 }
