@@ -1,15 +1,18 @@
 {
-  "name": "money-to-thai-word",
+  "name": "@potchangelo/money-to-thai-word",
   "version": "0.1.0-beta.1",
-  "description": "",
-  "keywords": [],
-  "author": "Potchara Puttawanchai",
+  "description": "Convert money in currency Baht and Satang to Thai word (Thai or English locale).",
+  "keywords": [
+    "money",
+    "currency",
+    "baht",
+    "satang",
+    "thai",
+    "english"
+  ],
+  "author": "Potchara Puttawanchai (https://github.com/potchangelo)",
   "license": "MIT",
   "main": "index.js",
-  "scripts": {
-    "test": "ava",
-    "test:watch": "ava --watch"
-  },
   "homepage": "https://github.com/potchangelo/money-to-thai-word#readme",
   "repository": {
     "type": "git",
@@ -17,6 +20,13 @@
   },
   "bugs": {
     "url": "https://github.com/potchangelo/money-to-thai-word/issues"
+  },
+  "engines": {
+    "node": ">= 14"
+  },
+  "scripts": {
+    "test": "ava",
+    "test:watch": "ava --watch"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
