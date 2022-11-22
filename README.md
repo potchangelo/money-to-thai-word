@@ -10,7 +10,7 @@ npm install @potchangelo/money-to-thai-word
 ```
 
 
-## Examples
+## Usage
 
 ### CommonJS
 
@@ -27,7 +27,7 @@ moneyToThaiWordLocaleEN(635.08);
 ### ES Module
 
 ```
-const { moneyToThaiWord, moneyToThaiWordLocaleEN } = require('@potchangelo/money-to-thai-word');
+import { moneyToThaiWord, moneyToThaiWordLocaleEN } from '@potchangelo/money-to-thai-word';
 
 moneyToThaiWord(5.25);
 // ห้าบาทยี่สิบห้าสตางค์

@@ -1,6 +1,6 @@
 {
   "name": "@potchangelo/money-to-thai-word",
-  "version": "0.1.0-beta.1",
+  "version": "0.1.0-beta.2",
   "description": "Convert money in currency Baht and Satang to Thai word (Thai or English locale).",
   "keywords": [
     "money",
@@ -31,8 +31,8 @@
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
-    "ava": "^5.0.1",
-    "eslint": "^8.27.0",
+    "ava": "^5.1.0",
+    "eslint": "^8.28.0",
     "prettier": "^2.7.1"
   }
 }

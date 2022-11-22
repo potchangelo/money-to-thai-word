@@ -1,5 +1,5 @@
 export interface ThaiWordOptions {
-  showActual?: boolean
+  showActual?: boolean;
 }
 
 /**
@@ -10,7 +10,7 @@ export interface ThaiWordOptions {
 export function moneyToThaiWord(money: number, options?: ThaiWordOptions): string;
 
 export interface ThaiWordLocaleENOptions {
-  textTransform?: 'first-letter'|'lowercase'|'uppercase'|'capitalize'
+  textTransform?: 'first-letter' | 'lowercase' | 'uppercase' | 'capitalize';
 }
 
 /**
