@@ -13,6 +13,7 @@
   "author": "Potchara Puttawanchai (https://github.com/potchangelo)",
   "license": "MIT",
   "main": "index.js",
+  "types": "index.d.ts",
   "homepage": "https://github.com/potchangelo/money-to-thai-word#readme",
   "repository": {
     "type": "git",

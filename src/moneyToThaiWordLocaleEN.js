@@ -10,15 +10,17 @@ function isUniqueTen(n) {
 
 /**
  * Convert front number and its base number to word.
- *
- * Example 1 : front = 11 -> "eleven"
- *
- * Example 2 : front = 4, base = 10 -> "forty"
- *
- * Example 3 : front = 7, base = 100 -> "seven hundred"
- *
  * @param {number} front Integer number between 1-19.
  * @param {10|100} [base] 10, 100, or nothing.
+ * @example
+ * frontAndBaseToWord(11)
+ * // "eleven"
+ * @example
+ * frontAndBaseToWord(4, 10)
+ * // "forty"
+ * @example
+ * frontAndBaseToWord(7, 100)
+ * // "seven hundred"
  */
 function frontAndBaseToWord(front, base) {
   let frontWord = '';
@@ -60,12 +62,13 @@ function frontAndBaseToWord(front, base) {
 
 /**
  * Convert number (1-999) to word (with trailing space).
- *
- * Example 1 : 357 -> "three thousand fifty seven "
- *
- * Example 2 : 512 -> "five hundred twelve "
- *
- * @param {number} n Integer number between 1-999
+ * @param {number} n Integer number between 1-999.
+ * @example
+ * numberToWord(357)
+ * // "three thousand fifty seven "
+ * @example
+ * numberToWord(512)
+ * // "five hundred twelve "
  */
 function numberToWord(n) {
   if (n < 1 || n > 999) return '';
@@ -92,12 +95,13 @@ function numberToWord(n) {
 // FIXME: Change order from power number (1, 2, 3) to 1000, 1000000, 1eX
 /**
  * Convert 1000, 1000000, etc. to word (with trailing space).
- *
- * Example 1 : Order 1 is "1" + "000" = "thousand".
- *
- * Example 2 : Order 2 is "1" + "000" + "000" = "million".
- *
  * @param {1|2|3|4|5} order The three-zeros order. Example : 1 = 1000, 2 = 1000000.
+ * @example
+ * thousandOrderToWord(1)
+ * // "thousand"
+ * @example
+ * thousandOrderToWord(2)
+ * // "million"
  */
 function thousandOrderToWord(order) {
   let word = '';
@@ -111,10 +115,10 @@ function thousandOrderToWord(order) {
 
 /**
  * Convert baht to ordered sub-bahts (Array of integer numbers between 0-999).
- *
- * Example : 10,200,300 -> [10, 200, 300].
- *
  * @param {number} baht Integer baht value.
+ * @example
+ * bahtToSubBahts(10200300)
+ * // [10, 200, 300].
  */
 function bahtToSubBahts(baht) {
   // Empty array for zero baht
@@ -139,10 +143,10 @@ function bahtToSubBahts(baht) {
 
 /**
  * Convert sub-bahts to word.
- *
- * Example : [10, 200, 300] -> "ten million " + "two hundred thousand " + "three hundred " + "bath"
- *
  * @param {number[]} subBahts Array of integer numbers between 0-999.
+ * @example
+ * subBahtToWord([10, 200, 300])
+ * // "ten million " + "two hundred thousand " + "three hundred " + "bath"
  */
 function subBahtToWord(subBahts) {
   // Empty string for zero baht
@@ -165,10 +169,10 @@ function subBahtToWord(subBahts) {
 
 /**
  * Convert satang to word.
- *
- * Example : 75 -> "seventy five " + "satang"
- *
  * @param {number} satang Integer satang value between 1-99.
+ * @example
+ * satangToWord(75)
+ * // "seventy five " + "satang"
  */
 function satangToWord(satang) {
   return satang > 0 ? numberToWord(satang) + 'satang' : '';
